@@ -34,17 +34,17 @@
 
 let
   # base - versions
-  version = "17.5.2";
-  build = "23775571";
+  version = "17.6.1";
+  build = "24319023";
   baseUrl = "https://softwareupdate.vmware.com/cds/vmw-desktop/ws/${version}/${build}/linux";
 
   # tools - versions
-  toolsVersion = "12.4.0";
-  toolsBuild = "23259341";
+  toolsVersion = "12.4.5";
+  toolsBuild = "23787635";
 
   # macOS - versions
-  fusionVersion = "13.5.2";
-  fusionBuild = "23775688";
+  fusionVersion = "13.6.1";
+  fusionBuild = "24319021";
   unlockerVersion = "3.0.5";
 
   guestToolsSrc =
@@ -55,19 +55,14 @@ let
       stripRoot = false;
     } + "/vmware-tools-${system}-${toolsVersion}-${toolsBuild}.x86_64.component");
   in lib.mapAttrsToList fetchComponent {
-      linux = "sha256-vT08mR6cCXZjiQgb9jy+MaqYzS0hFbNUM7xGAHIJ8Ao=";
-      linuxPreGlibc25 = "sha256-BodN1lxuhxyLlxIQSlVhGKItJ10VPlti/sEyxcRF2SA=";
-      netware = "sha256-o/S4wAYLR782Fn20fTQ871+rzsa1twnAxb9laV16XIk=";
-      solaris = "sha256-3LdFoI4TD5zxlohDGR3DRGbF6jwDZAoSMEpHWU4vSGU=";
-      winPre2k = "sha256-+QcvWfY3aCDxUwAfSuj7Wf9sxIO+ztWBrRolMim8Dfw=";
-      winPreVista = "sha256-3NgO/GdRFTpKNo45TMet0msjzxduuoF4nVLtnOUTHUA=";
-      windows = "sha256-2F7UPjNvtibmWAJxpB8IOnol12aMOGMy+403WeCTXw8=";
+      windows = "sha256-cv/5hv73c9ZaJsbDYdiedHtVARhw6YaFyJ+66rR/T3Y=";
+      windows-x86 = "sha256-4ZtihmocGIF+4yMlqP5Hb9gFt+AxXGzdHQbVCxTs41Q=";
   };
 
   # macOS - ISOs
   darwinIsoSrc = fetchzip {
     url = "https://softwareupdate.vmware.com/cds/vmw-desktop/fusion/${fusionVersion}/${fusionBuild}/universal/core/com.vmware.fusion.zip.tar";
-    sha256 = "sha256-DDLRWAVRI3ZeXV5bUXWwput9mEC1qsJUsjojI0CJYMI=";
+    sha256 = "sha256-pWUc7tZyrhYx8aa3Fruuvub2eUEX0ibe+93Mni985oc=";
     stripRoot = false;
   } + "/com.vmware.fusion.zip";
 
@@ -123,7 +118,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "${baseUrl}/core/VMware-Workstation-${version}-${build}.x86_64.bundle.tar";
-    sha256 = "sha256-5PZZpXN/V687TXjqeTm8MEays4/QTf02jVfdpi9C7GI=";
+    sha256 = "sha256-VzfiIawBDz0f1w3eynivW41Pn4SqvYf/8o9q14hln4s=";
     stripRoot = false;
   } + "/VMware-Workstation-${version}-${build}.x86_64.bundle";
 
@@ -286,13 +281,8 @@ stdenv.mkDerivation rec {
 
     ${lib.optionalString enableGuestTools ''
     echo "Installing VMware Tools"
-    cp unpacked/vmware-tools-linux/linux.iso \
-       unpacked/vmware-tools-linuxPreGlibc25/linuxPreGlibc25.iso \
-       unpacked/vmware-tools-netware/netware.iso \
-       unpacked/vmware-tools-solaris/solaris.iso \
-       unpacked/vmware-tools-winPre2k/winPre2k.iso \
-       unpacked/vmware-tools-winPreVista/winPreVista.iso \
-       unpacked/vmware-tools-windows/windows.iso \
+    cp unpacked/vmware-tools-windows/windows.iso \
+       unpacked/vmware-tools-windows-x86/windows-x86.iso \
        $out/lib/vmware/isoimages/
     ''}
 
