@@ -38879,4 +38879,13 @@ with pkgs;
   };
 
   dotultimate = recurseIntoAttrs (callPackages ../development/tools/misc/dotultimate {});
+
+  dnspy = callPackage ../by-name/dn/dnspy/package.nix {
+    wine = wine64Packages.staging;
+  };
+
+  dnspy32 = callPackage ../by-name/dn/dnspy/package.nix {
+    wine = winePackages.staging;
+    is32bit = true;
+  };
 }
