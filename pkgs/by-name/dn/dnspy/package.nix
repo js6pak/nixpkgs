@@ -5,7 +5,7 @@
   lndir,
   fetchFromGitHub,
   buildDotnetModule,
-  dotnetCorePackages,
+  pkgsCross,
   is32bit ? false,
   wine,
   makeWrapper,
@@ -67,9 +67,11 @@ stdenvNoCC.mkDerivation rec {
       "Extensions/dnSpy.Debugger/dnSpy.Debugger.DotNet.Mono/dnSpy.Debugger.DotNet.Mono.csproj"
       "Extensions/dnSpy.Scripting.Roslyn/dnSpy.Scripting.Roslyn.csproj"
     ];
-    nugetDeps = if is32bit then ./deps32.nix else ./deps.nix;
+    nugetDeps = ./deps.nix;
 
-    dotnet-sdk = dotnetCorePackages.sdk_8_0;
+    dotnet-sdk =
+      (if is32bit then pkgsCross.mingw32 else pkgsCross.mingwW64)
+      .buildPackages.dotnetCorePackages.sdk_8_0;
     dotnet-runtime = null;
 
     runtimeId = "win-${if is32bit then "x86" else "x64"}";
@@ -140,7 +142,6 @@ stdenvNoCC.mkDerivation rec {
   passthru.updateScript = writeShellScript "update-dnspy" ''
     ${lib.getExe nix-update} "dnspy.unwrapped"
     "$(nix-build -A "dnspy.unwrapped.fetch-deps" --no-out-link)"
-    "$(nix-build -A "dnspy32.unwrapped.fetch-deps" --no-out-link)"
   '';
 
   meta = unwrapped.meta // {
