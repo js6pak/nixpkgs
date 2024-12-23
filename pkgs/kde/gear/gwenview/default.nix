@@ -31,4 +31,6 @@ mkKdeDerivation {
     lcms2
     libtiff
   ];
+
+  meta.mainProgram = "gwenview";
 }
