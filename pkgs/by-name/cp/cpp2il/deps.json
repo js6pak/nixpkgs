@@ -1,0 +1,82 @@
+[
+  {
+    "pname": "AsmResolver",
+    "version": "6.0.0-beta.3",
+    "hash": "sha256-hZfhHUMesxRo7Ek0kwKBOQ7+2+WkkFhavEk4stK4Ku0="
+  },
+  {
+    "pname": "AsmResolver.DotNet",
+    "version": "6.0.0-beta.3",
+    "hash": "sha256-x9BE2dfeACzOUtwrrzFJARMbt6yYREtSQYmdeqJIdJo="
+  },
+  {
+    "pname": "AsmResolver.PE",
+    "version": "6.0.0-beta.3",
+    "hash": "sha256-//cJkU4+PCAlBcSDeLjwWVkPJBQT1XzHx65uzrEPJR8="
+  },
+  {
+    "pname": "AsmResolver.PE.File",
+    "version": "6.0.0-beta.3",
+    "hash": "sha256-YzOcIBeILNSn8XATTC9j+0vgFXi6j4t/CQngOK/ZrnA="
+  },
+  {
+    "pname": "AssetRipper.CIL",
+    "version": "1.1.6",
+    "hash": "sha256-dDiXWd3AtOWlaxFC1+xdw1MkmIGat2/CuH1oTZBF/RA="
+  },
+  {
+    "pname": "AssetRipper.Gee.External.Capstone",
+    "version": "2.3.2",
+    "hash": "sha256-IrcwjWUR0hAO2dmDVIFCd82pJYnpnrRrUMd8Z0dcVjk="
+  },
+  {
+    "pname": "AssetRipper.Primitives",
+    "version": "3.1.6",
+    "hash": "sha256-0RJAOo3bP8o5pxLvJd7TVTLZqkHg+/PqvN0IF2EyRPY="
+  },
+  {
+    "pname": "CommandLineParser",
+    "version": "2.9.1",
+    "hash": "sha256-ApU9y1yX60daSjPk3KYDBeJ7XZByKW8hse9NRZGcjeo="
+  },
+  {
+    "pname": "Disarm",
+    "version": "2022.1.0-master.57",
+    "hash": "sha256-c2FfmZK4u0E5mAqMCQGprzaf0X4dkhqktp74L/oSNOc="
+  },
+  {
+    "pname": "Iced",
+    "version": "1.21.0",
+    "hash": "sha256-0xYTYX4935Ejm7yUqMWHhJtCNuj4oqK6Weojl6FIfHo="
+  },
+  {
+    "pname": "Microsoft.Build.Tasks.Git",
+    "version": "8.0.0",
+    "hash": "sha256-vX6/kPij8vNAu8f7rrvHHhPrNph20IcufmrBgZNxpQA="
+  },
+  {
+    "pname": "Microsoft.SourceLink.Common",
+    "version": "8.0.0",
+    "hash": "sha256-AfUqleVEqWuHE7z2hNiwOLnquBJ3tuYtbkdGMppHOXc="
+  },
+  {
+    "pname": "Microsoft.SourceLink.GitHub",
+    "version": "8.0.0",
+    "hash": "sha256-hNTkpKdCLY5kIuOmznD1mY+pRdJ0PKu2HypyXog9vb0="
+  },
+  {
+    "pname": "Pastel",
+    "version": "6.0.1",
+    "hash": "sha256-IswAYJf+EeD6j47T5qZXHMdd7l6+nf0CYEaB1XG5TVE="
+  },
+  {
+    "pname": "PolySharp",
+    "version": "1.15.0",
+    "hash": "sha256-nH/UOZW4X93FUELaDteMvEEWofX4vii4e59jOqx9JTg="
+  },
+  {
+    "pname": "System.Runtime.CompilerServices.Unsafe",
+    "version": "6.1.1",
+    "hash": "sha256-FeUStJ8EDvosTT651WiWE0X19rE9QqNQpLmhkb/n+rM="
+  }
+]
