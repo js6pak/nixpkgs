@@ -1,10 +1,19 @@
 {
   lib,
   stdenvNoCC,
-  buildFHSEnv,
   fetchzip,
   fetchurl,
-  appimageTools,
+  autoPatchelfHook,
+  makeWrapper,
+  copyDesktopItems,
+  makeDesktopItem,
+  libgcc,
+  wayland,
+  xorg,
+  fontconfig,
+  libGL,
+  libsecret,
+  jetbrains,
   undmg,
 }:
 
@@ -19,7 +28,7 @@ let
     homepage = "https://www.jetbrains.com/toolbox-app";
     license = lib.licenses.unfree;
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
-    maintainers = with lib.maintainers; [ ners ];
+    maintainers = with lib.maintainers; [ ners js6pak ];
     platforms = [
       "aarch64-linux"
       "aarch64-darwin"
@@ -73,30 +82,67 @@ let
     };
 in
 selectKernel {
-  linux =
-    let
-      src = sourceForVersion version;
-    in
-    buildFHSEnv {
-      inherit pname version meta;
-      passthru = {
-        inherit src updateScript;
-      };
-      multiPkgs =
-        pkgs:
-        with pkgs;
-        [
-          icu
-          libappindicator-gtk3
-        ]
-        ++ appimageTools.defaultFhsEnvArgs.multiPkgs pkgs;
-      runScript = "${src}/bin/jetbrains-toolbox --update-failed";
+  linux = stdenvNoCC.mkDerivation {
+    inherit pname version meta;
 
-      extraInstallCommands = ''
-        install -Dm0644 ${src}/bin/jetbrains-toolbox.desktop -t $out/share/applications
-        install -Dm0644 ${src}/bin/toolbox-tray-color.png $out/share/pixmaps/jetbrains-toolbox.png
-      '';
+    src = sourceForVersion version;
+
+    nativeBuildInputs = [
+      autoPatchelfHook
+      makeWrapper
+      copyDesktopItems
+    ];
+
+    buildInputs = [
+      libgcc.lib
+      wayland
+      xorg.libX11
+      xorg.libXext
+      xorg.libXrender
+      fontconfig
+      libGL
+      libsecret
+    ];
+
+    desktopItems = [
+      (makeDesktopItem {
+        name = "jetbrains-toolbox";
+        desktopName = "JetBrains Toolbox";
+        exec = "jetbrains-toolbox %u";
+        icon = "jetbrains-toolbox";
+        categories = [ "Development" ];
+        mimeTypes = [ "x-scheme-handler/jetbrains" ];
+        terminal = false;
+      })
+    ];
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/opt
+      mv bin $out/opt/jetbrains-toolbox
+
+      rm -r $out/opt/jetbrains-toolbox/jre
+      ln -s "${jetbrains.jdk}/lib/openjdk" $out/opt/jetbrains-toolbox/jre
+
+      patchelf $out/opt/jetbrains-toolbox/jetbrains-toolbox \
+        --add-needed libsecret-1.so
+
+      wrapProgram $out/opt/jetbrains-toolbox/jetbrains-toolbox \
+        --add-flag "--update-failed"
+
+      install -Dm0644 $out/opt/jetbrains-toolbox/toolbox-tray-color.png $out/share/pixmaps/jetbrains-toolbox.png
+
+      mkdir -p $out/bin
+      ln -s $out/opt/jetbrains-toolbox/jetbrains-toolbox $out/bin/jetbrains-toolbox
+
+      runHook postInstall
+    '';
+
+    passthru = {
+      inherit updateScript;
     };
+  };
 
   darwin = stdenvNoCC.mkDerivation (finalAttrs: {
     inherit
