@@ -24,6 +24,10 @@ stdenv.mkDerivation rec {
     fixDarwinDylibNames
   ];
 
+  cmakeFlags = [
+    (lib.cmakeFeature "CMAKE_POLICY_VERSION_MINIMUM" "3.10")
+  ];
+
   doCheck = true;
 
   # CMake 2.6 is deprecated and is no longer supported by CMake > 4
