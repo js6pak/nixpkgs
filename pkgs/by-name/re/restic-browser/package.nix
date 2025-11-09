@@ -66,7 +66,7 @@ rustPlatform.buildRustPackage rec {
     changelog = "https://github.com/emuell/restic-browser/releases/tag/v${version}";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ js6pak ];
-    mainProgram = "restic-browser";
+    mainProgram = "Restic-Browser";
     platforms = lib.platforms.linux ++ lib.platforms.darwin;
   };
 }
